@@ -43,11 +43,19 @@ public class Crate
         {
             return false;
         }
-        if (!lore.get(1).equals(ChatColor.WHITE + "You need a Steve Co. Supply Crate Key to open this."))
+        if (!lore.get(1).equals(ChatColor.WHITE + "You need a"))
         {
             return false;
         }
-        if (!lore.get(2).equals(ChatColor.WHITE + "You can pick one up at the Steve Co. Store."))
+        if (!lore.get(1).equals(ChatColor.YELLOW + "Steve Co. Supply Crate Key"))
+        {
+            return false;
+        }
+        if (!lore.get(1).equals(ChatColor.WHITE + "to open this."))
+        {
+            return false;
+        }
+        if (!lore.get(2).equals(ChatColor.WHITE + "Use /getadlink to get one."))
         {
             return false;
         }
@@ -70,8 +78,11 @@ public class Crate
         meta.setDisplayName(ChatColor.YELLOW + "Steve Co. Supply Crate");
         List<String> lore = new ArrayList<String>();
         lore.add(ChatColor.AQUA + "Crate series #" + series);
-        lore.add(ChatColor.WHITE + "You need a Steve Co. Supply Crate Key to open this.");
-        lore.add(ChatColor.WHITE + "You can pick one up at the Steve Co. Store.");
+        lore.add(ChatColor.WHITE + "You need a");
+        lore.add(ChatColor.YELLOW + "Steve Co. Supply Crate Key");
+        lore.add(ChatColor.WHITE + "to open this.");
+        lore.add(ChatColor.WHITE + "Use /getadlink to get one.");
+        //TODO: Make configurable
         meta.setLore(lore);
     }
 
