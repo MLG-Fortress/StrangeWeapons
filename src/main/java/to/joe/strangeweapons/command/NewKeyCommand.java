@@ -87,11 +87,11 @@ public class NewKeyCommand implements CommandExecutor
 
         if (target.equals(sender))
         {
-            sender.sendMessage(ChatColor.GOLD + "Given " + ChatColor.AQUA + "you " + quantity + ChatColor.GOLD + " keys(s)");
+            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + "you " + quantity + ChatColor.GOLD + " keys(s)");
         }
         else
         {
-            sender.sendMessage(ChatColor.GOLD + "Given " + ChatColor.AQUA + target.getName() + " " + quantity + ChatColor.GOLD + " keys(s)");
+            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getName() + " " + quantity + ChatColor.GOLD + " keys(s)");
             target.sendMessage(ChatColor.GOLD + "You" + ChatColor.WHITE + " have been given: " + quantity + ChatColor.GOLD + " Keys!"); // Tell player privately
         }
         return true;
@@ -105,7 +105,7 @@ public class NewKeyCommand implements CommandExecutor
             ItemStack key = MetaParser.makeKey();
             key.setAmount(quantity);
             Map<Integer, ItemStack> fail = p.getInventory().addItem(key);
-            sender.sendMessage(ChatColor.GOLD + "Given " + ChatColor.AQUA + p.getName() + " " + quantity + ChatColor.GOLD + " keys(s)");
+            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + p.getName() + " " + quantity + ChatColor.GOLD + " keys(s)");
             p.sendMessage(ChatColor.GOLD + "You" + ChatColor.WHITE + " have been given: " + quantity + ChatColor.GOLD + " Keys!"); // Tell player privately
             if (!fail.isEmpty())
             {
