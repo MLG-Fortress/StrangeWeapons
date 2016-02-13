@@ -39,7 +39,7 @@ public class Crate
             return false;
         }
         List<String> lore = meta.getLore();
-        if (lore.size() != 3)
+        if (lore.size() != 5)
         {
             return false;
         }
