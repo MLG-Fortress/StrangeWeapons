@@ -47,15 +47,15 @@ public class Crate
         {
             return false;
         }
-        if (!lore.get(1).equals(ChatColor.YELLOW + "Steve Co. Supply Crate Key"))
+        if (!lore.get(2).equals(ChatColor.YELLOW + "Steve Co. Supply Crate Key"))
         {
             return false;
         }
-        if (!lore.get(1).equals(ChatColor.WHITE + "to open this."))
+        if (!lore.get(3).equals(ChatColor.WHITE + "to open this."))
         {
             return false;
         }
-        if (!lore.get(2).equals(ChatColor.WHITE + "Use /getadlink to get one."))
+        if (!lore.get(4).equals(ChatColor.WHITE + "Use /getadlink to get one."))
         {
             return false;
         }
