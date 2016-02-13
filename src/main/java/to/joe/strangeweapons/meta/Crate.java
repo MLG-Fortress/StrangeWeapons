@@ -43,7 +43,7 @@ public class Crate
         {
             return false;
         }
-        if (!lore.get(1).equals(ChatColor.WHITE + "You need a"))
+        if (!lore.get(1).equals(ChatColor.WHITE + "Craft this crate with a"))
         {
             return false;
         }
@@ -78,7 +78,7 @@ public class Crate
         meta.setDisplayName(ChatColor.YELLOW + "Steve Co. Supply Crate");
         List<String> lore = new ArrayList<String>();
         lore.add(ChatColor.AQUA + "Crate series #" + series);
-        lore.add(ChatColor.WHITE + "You need a");
+        lore.add(ChatColor.WHITE + "Craft this crate with a");
         lore.add(ChatColor.YELLOW + "Steve Co. Supply Crate Key");
         lore.add(ChatColor.WHITE + "to open this.");
         lore.add(ChatColor.WHITE + "Use /getadlink to get one.");
