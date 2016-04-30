@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
@@ -472,5 +473,18 @@ public class InventoryListener implements Listener
                     }.runTaskLater(plugin, 0);
                 }
             }
+    }
+    @EventHandler(ignoreCancelled = true)
+    void onCraftEvent(CraftItemEvent event)
+    {
+        for (ItemStack item : event.getInventory())
+        {
+            if (StrangeWeapon.isStrangeWeapon(item) || Crate.isCrate(item) || MetaParser.isKey(item) || StrangePart.isPart(item) || MetaParser.isNameTag(item) || MetaParser.isDescriptionTag(item))
+            {
+                plugin.getLogger().info(event.getWhoClicked().getName() + " Attempted to craft something with a crate or key");
+                event.setCancelled(true);
+                return;
+            }
+        }
     }
 }

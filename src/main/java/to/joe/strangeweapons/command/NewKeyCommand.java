@@ -87,12 +87,12 @@ public class NewKeyCommand implements CommandExecutor
 
         if (target.equals(sender))
         {
-            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + "you " + quantity + ChatColor.GOLD + " keys(s)");
+            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + "you " + quantity + ChatColor.GOLD + " key(s)");
         }
         else
         {
-            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getName() + " " + quantity + ChatColor.GOLD + " keys(s)");
-            target.sendMessage(ChatColor.GOLD + "You" + ChatColor.WHITE + " have been given: " + quantity + ChatColor.GOLD + " Keys!"); // Tell player privately
+            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getName() + " " + quantity + ChatColor.GOLD + " key(s)");
+            target.sendMessage(ChatColor.GOLD + "You" + ChatColor.WHITE + " have been given: " + quantity + ChatColor.GOLD + " Key(s)!"); // Tell player privately
         }
         return true;
     }

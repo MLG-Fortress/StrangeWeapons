@@ -17,6 +17,7 @@ public class MetaParser
     private static List<String> keyLore = new ArrayList<String>();
     private static List<String> nameTagLore = new ArrayList<String>();
     private static List<String> descriptionTagLore = new ArrayList<String>();
+    private static Material keyMaterial = Material.TRIPWIRE_HOOK;
 
     static
     {
@@ -31,7 +32,7 @@ public class MetaParser
     public static boolean isKey(ItemStack item)
     {
         ItemMeta meta = item.getItemMeta();
-        if (item.getType().equals(Material.BLAZE_ROD) && meta.hasDisplayName() && meta.hasLore() && meta.getDisplayName().equals(keyName) && meta.getLore().equals(keyLore))
+        if (item.getType().equals(keyMaterial) && meta.hasDisplayName() && meta.hasLore() && meta.getDisplayName().equals(keyName) && meta.getLore().equals(keyLore))
         {
             return true;
         }
@@ -40,7 +41,7 @@ public class MetaParser
 
     public static ItemStack makeKey()
     {
-        ItemStack item = new ItemStack(Material.BLAZE_ROD);
+        ItemStack item = new ItemStack(keyMaterial);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(keyName);
         meta.setLore(keyLore);
