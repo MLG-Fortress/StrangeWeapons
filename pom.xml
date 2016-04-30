@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>to.joe</groupId>
     <artifactId>StrangeWeapons</artifactId>
-    <version>0.64M</version>
+    <version>0.7</version>
     <name>StrangeWeapons</name>
     <url>http://joe.to</url>
     <description>Strange weapons</description>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.9-R0.1-SNAPSHOT</version>
+            <version>1.9.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
