@@ -479,6 +479,8 @@ public class InventoryListener implements Listener
     {
         for (ItemStack item : event.getInventory())
         {
+            if (item == null)
+                continue;
             if (StrangeWeapon.isStrangeWeapon(item) || Crate.isCrate(item) || MetaParser.isKey(item) || StrangePart.isPart(item) || MetaParser.isNameTag(item) || MetaParser.isDescriptionTag(item))
             {
                 plugin.getLogger().info(event.getWhoClicked().getName() + " Attempted to craft something with a crate or key");
