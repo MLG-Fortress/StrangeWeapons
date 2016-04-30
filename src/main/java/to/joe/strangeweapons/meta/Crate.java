@@ -22,10 +22,11 @@ public class Crate
 {
 
     public static StrangeWeapons plugin;
+    public static Material crateMaterial = Material.TRAPPED_CHEST;
 
     public static boolean isCrate(ItemStack item)
     {
-        if (!item.getType().equals(Material.CHEST))
+        if (!item.getType().equals(crateMaterial))
         {
             return false;
         }
@@ -51,14 +52,6 @@ public class Crate
         {
             return false;
         }
-        if (!lore.get(3).equals(ChatColor.WHITE + "to open this."))
-        {
-            return false;
-        }
-        if (!lore.get(4).equals(ChatColor.WHITE + "Use /getadlink to get one."))
-        {
-            return false;
-        }
         return lore.get(0).matches(ChatColor.AQUA + "Crate series #[0-9]+");
     }
 
@@ -73,7 +66,7 @@ public class Crate
 
     public Crate(int series)
     {
-        item = new ItemStack(Material.CHEST);
+        item = new ItemStack(crateMaterial);
         meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.YELLOW + "Steve Co. Supply Crate");
         List<String> lore = new ArrayList<String>();
@@ -81,7 +74,7 @@ public class Crate
         lore.add(ChatColor.WHITE + "Craft this crate with a");
         lore.add(ChatColor.YELLOW + "Steve Co. Supply Crate Key");
         lore.add(ChatColor.WHITE + "to open this.");
-        lore.add(ChatColor.WHITE + "Use /getadlink to get one.");
+        lore.add(ChatColor.GRAY + "Hint: You can craft in your inventory.");
         //TODO: Make configurable
         meta.setLore(lore);
     }
