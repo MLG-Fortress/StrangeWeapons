@@ -388,7 +388,7 @@ public class InventoryListener implements Listener
                             else
                             {
                                 beforeCraft[i].setType(Material.AIR);
-                                player.kickPlayer("Glitch Abuser! You have been reported!");
+                                player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 1");
                             }
                         }
                         else
@@ -405,7 +405,7 @@ public class InventoryListener implements Listener
                                 else
                                 {
                                     beforeCraft[i].setType(Material.AIR);
-                                    player.kickPlayer("Glitch Abuser! You have been reported!");
+                                    player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 2");
                                 }
                             }
                     }

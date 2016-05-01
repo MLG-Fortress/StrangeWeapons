@@ -74,7 +74,8 @@ public class Crate
         lore.add(ChatColor.WHITE + "Craft this crate with a");
         lore.add(ChatColor.YELLOW + "Steve Co. Supply Crate Key");
         lore.add(ChatColor.WHITE + "to open this.");
-        lore.add(ChatColor.GRAY + "Hint: You can craft in your inventory.");
+        lore.add(ChatColor.GRAY + "Hint: You can craft");
+        lore.add(ChatColor.GRAY + "in your inventory");
         //TODO: Make configurable
         meta.setLore(lore);
     }
