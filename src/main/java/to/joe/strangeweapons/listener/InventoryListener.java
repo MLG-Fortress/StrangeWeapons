@@ -328,14 +328,17 @@ public class InventoryListener implements Listener
                     event.setResult(Event.Result.DENY); //The answer to fixing the weird server duplication. Except it also removes the player's loot lol
 
                     ItemStack[] beforeCraft = craftingInventory.getContents();
+                    boolean itemsStillRemain = true;
                     for (int i = 0; i < beforeCraft.length; i++)
                     {
                         plugin.getLogger().info(String.valueOf(beforeCraft[i].getAmount()));
                         if (MetaParser.isKey(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
-                                if (beforeCraft[i].getAmount() <= 0) {
+                                if (beforeCraft[i].getAmount() <= 0)
+                                {
                                     beforeCraft[i].setType(Material.AIR);
+                                    itemsStillRemain = false;
                                 }
                             } else {
                                 beforeCraft[i].setType(Material.AIR);
@@ -344,8 +347,10 @@ public class InventoryListener implements Listener
                         } else if (Crate.isCrate(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
-                                if (beforeCraft[i].getAmount() <= 0) {
+                                if (beforeCraft[i].getAmount() <= 0)
+                                {
                                     beforeCraft[i].setType(Material.AIR);
+                                    itemsStillRemain = false;
                                 }
                             } else {
                                 beforeCraft[i].setType(Material.AIR);
@@ -355,7 +360,20 @@ public class InventoryListener implements Listener
                     }
                     event.getInventory().setContents(beforeCraft);
                     //Put loot on player's cursor
-                    event.setCursor(loot);
+                    event.setCursor(loot); //Although deprecated, works because we've denied the result
+
+                    if (itemsStillRemain)
+                    {
+                        //Prepare fake item
+                        ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
+                        ItemMeta meta = fakeItem.getItemMeta();
+                        meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
+                        fakeItem.setItemMeta(meta);
+                        fakeItem.setType(Material.POTATO_ITEM);
+
+                        //set fake item in result slot, and update inventory to reflect this on next tick
+                        craftingInventory.setResult(fakeItem);
+                    }
                     new BukkitRunnable() {
                         public void run() {
                             player.updateInventory();
