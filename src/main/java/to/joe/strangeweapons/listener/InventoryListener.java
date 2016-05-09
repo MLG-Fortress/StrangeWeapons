@@ -97,7 +97,6 @@ public class InventoryListener implements Listener
 
             final CraftingInventory craftingInventory = (CraftingInventory) event.getInventory();
 
-            plugin.getLogger().info("fired runnable " + event.getSlotType().toString());
             new BukkitRunnable() {
                 public void run() {
                     ItemStack strangeWeapon = null;
@@ -149,7 +148,6 @@ public class InventoryListener implements Listener
                     /**
                      * If there's one itemstack of crates and one itemstack of keys...
                      */
-                    plugin.getLogger().info("numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
                     if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
                         //Prepare fake item
                         ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
@@ -160,7 +158,6 @@ public class InventoryListener implements Listener
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
-                        plugin.getLogger().info("adding a potato (craft)");
                         new BukkitRunnable() {
                             public void run() {
                                 player.updateInventory();
@@ -287,14 +284,12 @@ public class InventoryListener implements Listener
                     }
                     numTotalItems++;
                 }
-                plugin.getLogger().info("RESULT: numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
                 /**
                  * If there's one itemstack of crates and one itemstack of keys...
                  * He probably should've made a method for this instead which accepts a boolean (result or crafting) and such idk wutevar
                  */
                 if (numCrates == 1 && numKeys == 1 && numTotalItems == 2)
                 {
-                    plugin.getLogger().info("Detected uncrating recipe.");
                     ItemStack loot = new Crate(crate).getUncratedItem();
                     if (StrangeWeapon.isStrangeWeapon(loot))
                     {
@@ -331,7 +326,6 @@ public class InventoryListener implements Listener
                     boolean itemsStillRemain = true;
                     for (int i = 0; i < beforeCraft.length; i++)
                     {
-                        plugin.getLogger().info(String.valueOf(beforeCraft[i].getAmount()));
                         if (MetaParser.isKey(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
@@ -373,7 +367,6 @@ public class InventoryListener implements Listener
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
-                        plugin.getLogger().info("adding a potato (Result");
                     }
                     new BukkitRunnable() {
                         public void run() {
