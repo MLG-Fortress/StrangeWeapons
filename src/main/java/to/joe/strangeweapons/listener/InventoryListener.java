@@ -94,7 +94,8 @@ public class InventoryListener implements Listener
             }
             final CraftingInventory craftingInventory = (CraftingInventory) event.getInventory();
 
-            if (event.getSlotType() != SlotType.RESULT) {
+            if (event.getSlotType() != SlotType.RESULT)
+            {
                 ItemStack strangeWeapon = null;
                 int numStrangeWeapons = 0;
                 ItemStack crate = null;
@@ -159,7 +160,6 @@ public class InventoryListener implements Listener
                             player.updateInventory();
                         }
                     }.runTaskLater(plugin, 1);
-                    player.updateInventory();
                     return;
                 }
                 if (numStrangeWeapons == 1 && numStrangeParts == 1 && numTotalItems == 2) {
@@ -181,7 +181,6 @@ public class InventoryListener implements Listener
 
                         }
                     }.runTaskLater(plugin, 1);
-                    player.updateInventory();
                     return;
                 }
                 if (numStrangeWeapons == 1 && numNameTags == 1 && numTotalItems == 2) {
@@ -197,7 +196,6 @@ public class InventoryListener implements Listener
                             player.updateInventory();
                         }
                     }.runTaskLater(plugin, 1);
-                    player.updateInventory();
                     return;
                 }
                 if (numStrangeWeapons == 1 && numDescriptionTags == 1 && numTotalItems == 2) {
@@ -213,7 +211,6 @@ public class InventoryListener implements Listener
                             player.updateInventory();
                         }
                     }.runTaskLater(plugin, 1);
-                    player.updateInventory();
                     return;
                 }
                 if (numNormalItems != numTotalItems) {
@@ -223,14 +220,14 @@ public class InventoryListener implements Listener
                             player.updateInventory();
                         }
                     }.runTaskLater(plugin, 1);
-                    player.updateInventory();
                     return;
                 }
             }
             /**
              * if the result slot was clicked...
              */
-            else if (event.getSlotType() == SlotType.RESULT) {
+            else if (event.getSlotType() == SlotType.RESULT)
+            {
                 ItemStack[] matrix = craftingInventory.getMatrix();
                 ItemStack strangeWeapon = null;
                 int numStrangeWeapons = 0;
@@ -283,7 +280,8 @@ public class InventoryListener implements Listener
                  * If there's one itemstack of crates and one itemstack of keys...
                  * He probably should've made a method for this instead which accepts a boolean (result or crafting) and such idk wutevar
                  */
-                if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
+                if (numCrates == 1 && numKeys == 1 && numTotalItems == 2)
+                {
                     ItemStack loot = new Crate(crate).getUncratedItem();
                     if (StrangeWeapon.isStrangeWeapon(loot)) {
                         loot = new StrangeWeapon(loot).clone();
