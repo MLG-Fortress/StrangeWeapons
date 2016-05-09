@@ -257,7 +257,8 @@ public class InventoryListener implements Listener
                 int numTotalItems = 0;
 
                 //Iterate through each slot in the crafting matrix...
-                for (ItemStack i : matrix) {
+                for (ItemStack i : matrix)
+                {
                     if (i == null || i.getTypeId() == 0) //Skip slot if slot is empty
                     {
                         continue;
@@ -287,14 +288,17 @@ public class InventoryListener implements Listener
                     }
                     numTotalItems++;
                 }
+                plugin.getLogger().info("RESULT: numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
                 /**
                  * If there's one itemstack of crates and one itemstack of keys...
                  * He probably should've made a method for this instead which accepts a boolean (result or crafting) and such idk wutevar
                  */
                 if (numCrates == 1 && numKeys == 1 && numTotalItems == 2)
                 {
+                    plugin.getLogger().info("Detected uncrating recipe.");
                     ItemStack loot = new Crate(crate).getUncratedItem();
-                    if (StrangeWeapon.isStrangeWeapon(loot)) {
+                    if (StrangeWeapon.isStrangeWeapon(loot))
+                    {
                         loot = new StrangeWeapon(loot).clone();
                     }
                 /*
