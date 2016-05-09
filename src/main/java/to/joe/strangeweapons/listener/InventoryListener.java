@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -313,13 +314,15 @@ public class InventoryListener implements Listener
                     //Broadcast the uncrating
                     //TODO: hook into my sound API and play much fanfare
                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
-                    // event.setResult(Result.ALLOW);
+                    event.setResult(Event.Result.DENY);
                     // Maybe this fixes it?
                     // Dupe fix?
 
                     /**
-                     * So here he's trying to remove items from the crafting matrix
-                     * Weird things happen if there's more than one key in the matrix for whatever reason
+                     * So here he's trying to remove items from the crafting matrix.
+                     * Weird things happen if there's more than one key in the matrix for whatever reason.
+                     * Unless I'm blind and can't see the problem here, I think the server is messing up when the ItemClickEvent fires in
+                     * result slot with stuff in the matrix... I guess. Probably because of the fake item
                      */
                     ItemStack[] beforeCraft = craftingInventory.getContents();
                     for (int i = 0; i < beforeCraft.length; i++)
