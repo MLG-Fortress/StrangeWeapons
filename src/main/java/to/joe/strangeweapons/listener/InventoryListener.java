@@ -1,5 +1,6 @@
 package to.joe.strangeweapons.listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -96,134 +97,141 @@ public class InventoryListener implements Listener
 
             if (event.getSlotType() != SlotType.RESULT)
             {
-                ItemStack strangeWeapon = null;
-                int numStrangeWeapons = 0;
-                ItemStack crate = null;
-                int numCrates = 0;
-                ItemStack key = null;
-                int numKeys = 0;
-                ItemStack strangePart = null;
-                int numStrangeParts = 0;
-                ItemStack nameTag = null;
-                int numNameTags = 0;
-                ItemStack descriptionTag = null;
-                int numDescriptionTags = 0;
-                ItemStack normalItem = null;
-                int numNormalItems = 0;
-                int numTotalItems = 0;
-                for (ItemStack i : craftingInventory.getContents()) {
-                    if (i == null || i.getType() == Material.AIR) {
-                        continue;
-                    }
-                    /**
-                     * I guess he's counting instances of an item, and setting the item stack to such a variable... I doubt this is a good way to go about this
-                     */
-                    if (StrangeWeapon.isStrangeWeapon(i)) {
-                        numStrangeWeapons++;
-                        strangeWeapon = i;
-                    } else if (Crate.isCrate(i)) {
-                        numCrates++;
-                        crate = i;
-                    } else if (MetaParser.isKey(i)) {
-                        numKeys++;
-                        key = i;
-                    } else if (StrangePart.isPart(i)) {
-                        numStrangeParts++;
-                        strangePart = i;
-                    } else if (MetaParser.isNameTag(i)) {
-                        numNameTags++;
-                        nameTag = i;
-                    } else if (MetaParser.isDescriptionTag(i)) {
-                        numDescriptionTags++;
-                        descriptionTag = i;
-                    } else {
-                        numNormalItems++;
-                        normalItem = i;
-                    }
-                    numTotalItems++;
-                }
-                /**
-                 * If there's one itemstack of crates and one itemstack of keys...
-                 */
-            //TODO: remove debug
-            plugin.getLogger().info("numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
-                if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
-                    //Prepare fake item
-                    ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
-                    ItemMeta meta = fakeItem.getItemMeta();
-                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
-                    fakeItem.setItemMeta(meta);
-                    fakeItem.setType(Material.POTATO_ITEM);
+                new BukkitRunnable()
+                {
+                    public void run()
+                    {
+                        ItemStack strangeWeapon = null;
+                        int numStrangeWeapons = 0;
+                        ItemStack crate = null;
+                        int numCrates = 0;
+                        ItemStack key = null;
+                        int numKeys = 0;
+                        ItemStack strangePart = null;
+                        int numStrangeParts = 0;
+                        ItemStack nameTag = null;
+                        int numNameTags = 0;
+                        ItemStack descriptionTag = null;
+                        int numDescriptionTags = 0;
+                        ItemStack normalItem = null;
+                        int numNormalItems = 0;
+                        int numTotalItems = 0;
+                        for (ItemStack i : craftingInventory.getContents()) {
+                            if (i == null || i.getType() == Material.AIR) {
+                                continue;
+                            }
+                            /**
+                             * I guess he's counting instances of an item, and setting the item stack to such a variable... I doubt this is a good way to go about this
+                             */
+                            if (StrangeWeapon.isStrangeWeapon(i)) {
+                                numStrangeWeapons++;
+                                strangeWeapon = i;
+                            } else if (Crate.isCrate(i)) {
+                                numCrates++;
+                                crate = i;
+                            } else if (MetaParser.isKey(i)) {
+                                numKeys++;
+                                key = i;
+                            } else if (StrangePart.isPart(i)) {
+                                numStrangeParts++;
+                                strangePart = i;
+                            } else if (MetaParser.isNameTag(i)) {
+                                numNameTags++;
+                                nameTag = i;
+                            } else if (MetaParser.isDescriptionTag(i)) {
+                                numDescriptionTags++;
+                                descriptionTag = i;
+                            } else {
+                                numNormalItems++;
+                                normalItem = i;
+                            }
+                            numTotalItems++;
+                        }
+                        /**
+                         * If there's one itemstack of crates and one itemstack of keys...
+                         */
+                        //TODO: remove debug
+                        plugin.getLogger().info("numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
+                        if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
+                            //Prepare fake item
+                            ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
+                            ItemMeta meta = fakeItem.getItemMeta();
+                            meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
+                            fakeItem.setItemMeta(meta);
+                            fakeItem.setType(Material.POTATO_ITEM);
 
-                    //set fake item in result slot, and update inventory to reflect this on next tick
-                    craftingInventory.setResult(fakeItem);
-                    new BukkitRunnable() {
-                        public void run() {
-                            player.updateInventory();
+                            //set fake item in result slot, and update inventory to reflect this on next tick
+                            craftingInventory.setResult(fakeItem);
+                            new BukkitRunnable() {
+                                public void run() {
+                                    player.updateInventory();
+                                }
+                            }.runTaskLater(plugin, 1);
+                            return;
                         }
-                    }.runTaskLater(plugin, 1);
-                    return;
-                }
-                if (numStrangeWeapons == 1 && numStrangeParts == 1 && numTotalItems == 2) {
-                    StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
-                    StrangePart part = new StrangePart(strangePart);
-                    if (weapon.getParts().size() > plugin.config.maxParts) {
-                        craftingInventory.setResult(null);
-                        player.sendMessage(ChatColor.RED + "You may only have " + plugin.config.maxParts + " strange parts on a weapon");
-                    } else if (weapon.getParts().containsKey(part.getPart())) {
-                        craftingInventory.setResult(null);
-                        player.sendMessage(ChatColor.RED + "This weapon is already tracking " + part.getPart().getName());
-                    } else {
-                        weapon.getParts().put(part.getPart(), 0);
-                        craftingInventory.setResult(weapon.previewItemStack());
-                    }
-                    new BukkitRunnable() {
-                        public void run() {
-                            player.updateInventory();
+                        if (numStrangeWeapons == 1 && numStrangeParts == 1 && numTotalItems == 2) {
+                            StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
+                            StrangePart part = new StrangePart(strangePart);
+                            if (weapon.getParts().size() > plugin.config.maxParts) {
+                                craftingInventory.setResult(null);
+                                player.sendMessage(ChatColor.RED + "You may only have " + plugin.config.maxParts + " strange parts on a weapon");
+                            } else if (weapon.getParts().containsKey(part.getPart())) {
+                                craftingInventory.setResult(null);
+                                player.sendMessage(ChatColor.RED + "This weapon is already tracking " + part.getPart().getName());
+                            } else {
+                                weapon.getParts().put(part.getPart(), 0);
+                                craftingInventory.setResult(weapon.previewItemStack());
+                            }
+                            new BukkitRunnable() {
+                                public void run() {
+                                    player.updateInventory();
 
+                                }
+                            }.runTaskLater(plugin, 1);
+                            return;
                         }
-                    }.runTaskLater(plugin, 1);
-                    return;
-                }
-                if (numStrangeWeapons == 1 && numNameTags == 1 && numTotalItems == 2) {
-                    if (!plugin.tags.containsKey(player.getName())) {
-                        player.sendMessage(ChatColor.RED + "Set a name with /tag before using a name tag");
-                        return;
+                        if (numStrangeWeapons == 1 && numNameTags == 1 && numTotalItems == 2) {
+                            if (!plugin.tags.containsKey(player.getName())) {
+                                player.sendMessage(ChatColor.RED + "Set a name with /tag before using a name tag");
+                                return;
+                            }
+                            StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
+                            weapon.setCustomName(plugin.tags.get(player.getName()));
+                            craftingInventory.setResult(weapon.previewItemStack());
+                            new BukkitRunnable() {
+                                public void run() {
+                                    player.updateInventory();
+                                }
+                            }.runTaskLater(plugin, 1);
+                            return;
+                        }
+                        if (numStrangeWeapons == 1 && numDescriptionTags == 1 && numTotalItems == 2) {
+                            if (!plugin.tags.containsKey(player.getName())) {
+                                player.sendMessage(ChatColor.RED + "Set a description with /tag before using a description tag");
+                                return;
+                            }
+                            StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
+                            weapon.setDescription(plugin.tags.get(player.getName()));
+                            craftingInventory.setResult(weapon.previewItemStack());
+                            new BukkitRunnable() {
+                                public void run() {
+                                    player.updateInventory();
+                                }
+                            }.runTaskLater(plugin, 1);
+                            return;
+                        }
+                        //Clear result slot if there's StrangeWeapon items in there that hasn't matched conditions above
+                        if (numNormalItems != numTotalItems) {
+                            craftingInventory.setResult(null);
+                            new BukkitRunnable() {
+                                public void run() {
+                                    player.updateInventory();
+                                }
+                            }.runTaskLater(plugin, 1);
+                            return;
+                        }
                     }
-                    StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
-                    weapon.setCustomName(plugin.tags.get(player.getName()));
-                    craftingInventory.setResult(weapon.previewItemStack());
-                    new BukkitRunnable() {
-                        public void run() {
-                            player.updateInventory();
-                        }
-                    }.runTaskLater(plugin, 1);
-                    return;
-                }
-                if (numStrangeWeapons == 1 && numDescriptionTags == 1 && numTotalItems == 2) {
-                    if (!plugin.tags.containsKey(player.getName())) {
-                        player.sendMessage(ChatColor.RED + "Set a description with /tag before using a description tag");
-                        return;
-                    }
-                    StrangeWeapon weapon = new StrangeWeapon(strangeWeapon.clone());
-                    weapon.setDescription(plugin.tags.get(player.getName()));
-                    craftingInventory.setResult(weapon.previewItemStack());
-                    new BukkitRunnable() {
-                        public void run() {
-                            player.updateInventory();
-                        }
-                    }.runTaskLater(plugin, 1);
-                    return;
-                }
-                if (numNormalItems != numTotalItems) {
-                    craftingInventory.setResult(null);
-                    new BukkitRunnable() {
-                        public void run() {
-                            player.updateInventory();
-                        }
-                    }.runTaskLater(plugin, 1);
-                    return;
-                }
+                }.runTaskLater(plugin, 1L);
             }
             /**
              * if the result slot was clicked...
