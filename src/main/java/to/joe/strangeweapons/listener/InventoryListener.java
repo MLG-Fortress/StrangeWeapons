@@ -165,7 +165,7 @@ public class InventoryListener implements Listener
                             public void run() {
                                 player.updateInventory();
                             }
-                        }.runTaskLater(plugin, 1);
+                        }.runTaskLater(plugin, 2);
                         return;
                     }
                     if (numStrangeWeapons == 1 && numStrangeParts == 1 && numTotalItems == 2) {
