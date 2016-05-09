@@ -22,7 +22,7 @@ public class DestructionListener implements Listener
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @SuppressWarnings("deprecation")
+    //@SuppressWarnings("deprecation")
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent event)
     {
@@ -42,7 +42,7 @@ public class DestructionListener implements Listener
         if (Crate.isCrate(event.getItemInHand()))
         {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED + "You may not place Steve Co. Supply Crates");
+            event.getPlayer().sendMessage(ChatColor.RED + "To open a Steve Co. Supply Crate, craft it with a " + ChatColor.YELLOW + "Steve Co. Supply Crate key!");
         }
         else
             if (event.getItemInHand().getType().isBlock() && StrangeWeapon.isStrangeWeapon(event.getItemInHand()))

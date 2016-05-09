@@ -40,7 +40,7 @@ public class Crate
             return false;
         }
         List<String> lore = meta.getLore();
-        if (lore.size() != 5)
+        if (lore.size() < 3)
         {
             return false;
         }
@@ -76,7 +76,6 @@ public class Crate
         lore.add(ChatColor.WHITE + "to open this.");
         lore.add(ChatColor.GRAY + "Hint: You can craft");
         lore.add(ChatColor.GRAY + "in your inventory");
-        //TODO: Make configurable
         meta.setLore(lore);
     }
 

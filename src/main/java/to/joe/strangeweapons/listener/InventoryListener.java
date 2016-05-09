@@ -100,6 +100,10 @@ public class InventoryListener implements Listener
                 player.sendMessage(ChatColor.RED + "You may not trade that with a villager.");
             }
         }
+
+        /**
+         * If an item has been placed in a crafting slot...
+         */
         if (event.getSlotType() == SlotType.CRAFTING)
         {
             if (!(event.getInventory() instanceof CraftingInventory))
@@ -132,6 +136,9 @@ public class InventoryListener implements Listener
                         {
                             continue;
                         }
+                        /**
+                         * I guess he's counting instances of an item, and setting the item stack to such a variable... I doubt this is a good way to go about this
+                         */
                         if (StrangeWeapon.isStrangeWeapon(i))
                         {
                             numStrangeWeapons++;
@@ -174,14 +181,19 @@ public class InventoryListener implements Listener
                                             }
                         numTotalItems++;
                     }
+                    /**
+                     * If there's one itemstack of crates and one itemstack of keys...
+                     */
                     if (numCrates == 1 && numKeys == 1 && numTotalItems == 2)
                     {
+                        //Prepare fake item
                         ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
                         ItemMeta meta = fakeItem.getItemMeta();
                         meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
                         fakeItem.setItemMeta(meta);
                         fakeItem.setType(Material.POTATO_ITEM);
-                        
+
+                        //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
                         new BukkitRunnable()
                         {
@@ -280,6 +292,9 @@ public class InventoryListener implements Listener
                 }
             }, 1);
         }
+        /**
+         * if the result slot was clicked...
+         */
         else
             if (event.getSlotType() == SlotType.RESULT && event.getInventory() instanceof CraftingInventory)
             {
@@ -300,13 +315,15 @@ public class InventoryListener implements Listener
                 ItemStack normalItem = null;
                 int numNormalItems = 0;
                 int numTotalItems = 0;
+
+                //Iterate through each slot in the crafting matrix...
                 for (ItemStack i : matrix)
                 {
-                    if (i == null || i.getTypeId() == 0)
+                    if (i == null || i.getTypeId() == 0) //Skip slot if slot is empty
                     {
                         continue;
                     }
-                    if (StrangeWeapon.isStrangeWeapon(i))
+                    if (StrangeWeapon.isStrangeWeapon(i)) //Do the same retarded stuff as in the if block
                     {
                         numStrangeWeapons++;
                         strangeWeapon = i;
@@ -348,6 +365,10 @@ public class InventoryListener implements Listener
                                         }
                     numTotalItems++;
                 }
+                /**
+                 * If there's one itemstack of crates and one itemstack of keys...
+                 * He probably should've made a method for this instead which accepts a boolean (result or crafting) and such idk wutevar
+                 */
                 if (numCrates == 1 && numKeys == 1 && numTotalItems == 2)
                 {
                     ItemStack loot = new Crate(crate).getUncratedItem();
@@ -358,6 +379,8 @@ public class InventoryListener implements Listener
                     /*
                      * if (loot == null) { getLogger().severe( "LOOT IS NULL - Report this to the plugin author!"); getLogger().severe("Player " + player.getName() + " tried to uncrate a crate!" + crate.serialize().toString()); }
                      */// http://pastie.org/private/borniaknvtofbio6mfza
+
+                    //Determine loot's display name
                     String lootName;
                     if (loot.getItemMeta().hasDisplayName())
                     {
@@ -367,10 +390,17 @@ public class InventoryListener implements Listener
                     {
                         lootName = ChatColor.YELLOW + Util.toTitleCase(loot.getType().toString().toLowerCase().replaceAll("_", " "));
                     }
+                    //Broadcast the uncrating
+                    //TODO: hook into my sound API and play much fanfare
                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
                     // event.setResult(Result.ALLOW); 
                     // Maybe this fixes it?
                     // Dupe fix?
+
+                    /**
+                     * So here he's trying to remove items from the crafting matrix
+                     * Weird things happen if there's more than one key in the matrix for whatever reason
+                     */
                     ItemStack[] beforeCraft = craftingInventory.getContents();
                     
                     for (int i = 0; i < beforeCraft.length; i++)
@@ -380,6 +410,7 @@ public class InventoryListener implements Listener
                             if(beforeCraft[i].getAmount() > 0)
                             {    
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
+                                plugin.getLogger().info(String.valueOf(beforeCraft[i].getAmount()));
                                 if(beforeCraft[i].getAmount()<=0)
                                 {
                                     beforeCraft[i].setType(Material.AIR);
@@ -410,6 +441,7 @@ public class InventoryListener implements Listener
                             }
                     }
                     event.getInventory().setContents(beforeCraft);
+                    //Put loot on player's cursor
                     event.setCurrentItem(loot);
                     new BukkitRunnable()
                     {
