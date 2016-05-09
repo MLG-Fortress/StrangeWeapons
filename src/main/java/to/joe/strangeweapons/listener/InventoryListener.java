@@ -402,7 +402,7 @@ public class InventoryListener implements Listener
                      * Weird things happen if there's more than one key in the matrix for whatever reason
                      */
                     ItemStack[] beforeCraft = craftingInventory.getContents();
-                    
+                    /*
                     for (int i = 0; i < beforeCraft.length; i++)
                     {
                         if (MetaParser.isKey(beforeCraft[i]))
@@ -440,6 +440,7 @@ public class InventoryListener implements Listener
                                 }
                             }
                     }
+                    */
                     //event.getInventory().setContents(beforeCraft);
                     //Put loot on player's cursor
                     event.setCurrentItem(loot);
