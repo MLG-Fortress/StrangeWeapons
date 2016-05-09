@@ -315,29 +315,48 @@ public class InventoryListener implements Listener
                         if (MetaParser.isKey(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
-                                plugin.getLogger().info(String.valueOf(beforeCraft[i].getAmount()));
+                                if (beforeCraft[i].getAmount() <= 0) {
                                     beforeCraft[i].setType(Material.AIR);
                                 }
+                            } else {
                                 beforeCraft[i].setType(Material.AIR);
                                 player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 1");
                             }
+                        } else if (Crate.isCrate(beforeCraft[i])) {
+                            if (beforeCraft[i].getAmount() > 0) {
+                                beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
+                                if (beforeCraft[i].getAmount() <= 0) {
                                     beforeCraft[i].setType(Material.AIR);
                                 }
+                            } else {
+                                beforeCraft[i].setType(Material.AIR);
+                                player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 2");
                             }
+                        }
                     }
+                    event.getInventory().setContents(beforeCraft);
                     //Put loot on player's cursor
                     event.setCurrentItem(loot);
+                    new BukkitRunnable() {
+                        public void run() {
                             player.updateInventory();
                         }
+                    }.runTaskLater(plugin, 1);
                 }
+                if (numStrangeWeapons == 1 && numStrangeParts == 1 && numTotalItems == 2) {
                     StrangeWeapon weapon = new StrangeWeapon(strangeWeapon);
                     StrangePart part = new StrangePart(strangePart);
                     weapon.getParts().put(part.getPart(), 0);
                     craftingInventory.clear();
                     event.setCurrentItem(weapon.getItemStack());
+                    new BukkitRunnable() {
+                        public void run() {
                             player.updateInventory();
                         }
+                    }.runTaskLater(plugin, 1);
                 }
+                if (numStrangeWeapons == 1 && numNameTags == 1 && numTotalItems == 2) {
+                    if (!plugin.tags.containsKey(player.getName())) {
                         player.sendMessage(ChatColor.RED + "Set a name with /tag before using a name tag");
                         return;
                     }
@@ -345,9 +364,14 @@ public class InventoryListener implements Listener
                     weapon.setCustomName(plugin.tags.get(player.getName()));
                     craftingInventory.clear();
                     event.setCurrentItem(weapon.getItemStack());
+                    new BukkitRunnable() {
+                        public void run() {
                             player.updateInventory();
                         }
+                    }.runTaskLater(plugin, 1);
                 }
+                if (numStrangeWeapons == 1 && numDescriptionTags == 1 && numTotalItems == 2) {
+                    if (!plugin.tags.containsKey(player.getName())) {
                         player.sendMessage(ChatColor.RED + "Set a description with /tag before using a description tag");
                         return;
                     }
@@ -355,10 +379,14 @@ public class InventoryListener implements Listener
                     weapon.setDescription(plugin.tags.get(player.getName()));
                     craftingInventory.clear();
                     event.setCurrentItem(weapon.getItemStack());
+                    new BukkitRunnable() {
+                        public void run() {
                             player.updateInventory();
                         }
+                    }.runTaskLater(plugin, 1);
                 }
             }
+        }
     }
     @EventHandler(ignoreCancelled = true)
     void onCraftEvent(CraftItemEvent event)
