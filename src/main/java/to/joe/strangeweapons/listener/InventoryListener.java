@@ -33,8 +33,9 @@ public class InventoryListener implements Listener
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void onInventoryClick(InventoryClickEvent event)
+    {
         final Player player = (Player) event.getWhoClicked();
         if (event.getInventory().getType() == InventoryType.BREWING) {
             ItemStack item = event.getCursor();
@@ -399,7 +400,6 @@ public class InventoryListener implements Listener
                 }
             }
         }
-    }
     @EventHandler(ignoreCancelled = true)
     void onCraftEvent(CraftItemEvent event)
     {
