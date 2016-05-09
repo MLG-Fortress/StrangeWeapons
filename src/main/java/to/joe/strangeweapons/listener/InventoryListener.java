@@ -97,6 +97,7 @@ public class InventoryListener implements Listener
 
             if (event.getSlotType() != SlotType.RESULT)
             {
+                plugin.getLogger().info("fired runnable " + event.getSlotType().toString());
                 new BukkitRunnable()
                 {
                     public void run()
@@ -234,7 +235,7 @@ public class InventoryListener implements Listener
                 }.runTaskLater(plugin, 1L);
             }
             /**
-             * if the result slot was clicked...
+             * if the RESULT slot was clicked...
              */
             else if (event.getSlotType() == SlotType.RESULT)
             {
@@ -261,7 +262,7 @@ public class InventoryListener implements Listener
                     {
                         continue;
                     }
-                    if (StrangeWeapon.isStrangeWeapon(i)) //Do the same retarded stuff as in the if block
+                    if (StrangeWeapon.isStrangeWeapon(i)) //Do the same retarded stuff as before
                     {
                         numStrangeWeapons++;
                         strangeWeapon = i;
@@ -319,7 +320,9 @@ public class InventoryListener implements Listener
                      * Weird things happen if there's more than one key in the matrix for whatever reason
                      */
                     ItemStack[] beforeCraft = craftingInventory.getContents();
-                    for (int i = 0; i < beforeCraft.length; i++) {
+                    for (int i = 0; i < beforeCraft.length; i++)
+                    {
+                        plugin.getLogger().info(String.valueOf(beforeCraft[i].getAmount()));
                         if (MetaParser.isKey(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
                                 beforeCraft[i].setAmount(beforeCraft[i].getAmount() - 1);
