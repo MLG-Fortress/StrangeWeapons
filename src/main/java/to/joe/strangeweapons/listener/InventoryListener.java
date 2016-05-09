@@ -314,7 +314,7 @@ public class InventoryListener implements Listener
                     //Broadcast the uncrating
                     //TODO: hook into my sound API and play much fanfare
                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
-                    event.setResult(Event.Result.DENY);
+
                     // Maybe this fixes it?
                     // Dupe fix?
 
@@ -324,6 +324,9 @@ public class InventoryListener implements Listener
                      * Unless I'm blind and can't see the problem here, I think the server is messing up when the ItemClickEvent fires in
                      * result slot with stuff in the matrix... I guess. Probably because of the fake item
                      */
+
+                    event.setResult(Event.Result.DENY); //The answer to fixing the weird server duplication. Except it also removes the player's loot lol
+
                     ItemStack[] beforeCraft = craftingInventory.getContents();
                     for (int i = 0; i < beforeCraft.length; i++)
                     {
@@ -352,7 +355,7 @@ public class InventoryListener implements Listener
                     }
                     event.getInventory().setContents(beforeCraft);
                     //Put loot on player's cursor
-                    event.setCurrentItem(loot);
+                    event.setCursor(loot);
                     new BukkitRunnable() {
                         public void run() {
                             player.updateInventory();
