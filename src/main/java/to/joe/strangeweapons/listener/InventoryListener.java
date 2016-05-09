@@ -149,7 +149,6 @@ public class InventoryListener implements Listener
                     /**
                      * If there's one itemstack of crates and one itemstack of keys...
                      */
-                    //TODO: remove debug
                     plugin.getLogger().info("numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
                     if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
                         //Prepare fake item
@@ -161,6 +160,7 @@ public class InventoryListener implements Listener
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
+                        plugin.getLogger().info("adding a potato (craft)");
                         new BukkitRunnable() {
                             public void run() {
                                 player.updateInventory();
@@ -373,6 +373,7 @@ public class InventoryListener implements Listener
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
+                        plugin.getLogger().info("adding a potato (Result");
                     }
                     new BukkitRunnable() {
                         public void run() {
