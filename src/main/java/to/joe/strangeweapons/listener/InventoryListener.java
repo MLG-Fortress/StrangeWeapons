@@ -145,6 +145,8 @@ public class InventoryListener implements Listener
                 /**
                  * If there's one itemstack of crates and one itemstack of keys...
                  */
+            //TODO: remove debug
+            plugin.getLogger().info("numCrates " + numCrates + " numKeys " + numKeys + " numTotalItems " + numTotalItems + " numNormalItems " + numNormalItems);
                 if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
                     //Prepare fake item
                     ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
