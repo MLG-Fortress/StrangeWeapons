@@ -440,7 +440,7 @@ public class InventoryListener implements Listener
                                 }
                             }
                     }
-                    event.getInventory().setContents(beforeCraft);
+                    //event.getInventory().setContents(beforeCraft);
                     //Put loot on player's cursor
                     event.setCurrentItem(loot);
                     new BukkitRunnable()
