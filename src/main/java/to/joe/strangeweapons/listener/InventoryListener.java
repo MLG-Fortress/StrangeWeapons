@@ -90,12 +90,14 @@ public class InventoryListener implements Listener
         /**
          * If a crafting slot was clicked...
          */
+
+        if (!(event.getInventory() instanceof CraftingInventory))
+            return;
+        final CraftingInventory craftingInventory = (CraftingInventory) event.getInventory();
+
         if (event.getSlotType() == SlotType.CRAFTING)
         {
-            if (!(event.getInventory() instanceof CraftingInventory))
-                return;
 
-            final CraftingInventory craftingInventory = (CraftingInventory) event.getInventory();
 
             new BukkitRunnable() {
                 public void run() {
@@ -234,7 +236,6 @@ public class InventoryListener implements Listener
              */
             else if (event.getSlotType() == SlotType.RESULT)
             {
-                CraftingInventory craftingInventory = (CraftingInventory) event.getInventory();
                 ItemStack[] matrix = craftingInventory.getMatrix();
                 ItemStack strangeWeapon = null;
                 int numStrangeWeapons = 0;
