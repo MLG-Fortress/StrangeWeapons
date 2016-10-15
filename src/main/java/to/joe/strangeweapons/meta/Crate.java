@@ -44,14 +44,6 @@ public class Crate
         {
             return false;
         }
-        if (!lore.get(1).equals(ChatColor.WHITE + "Craft this crate with a"))
-        {
-            return false;
-        }
-        if (!lore.get(2).equals(ChatColor.YELLOW + "Steve Co. Supply Crate Key"))
-        {
-            return false;
-        }
         return lore.get(0).matches(ChatColor.AQUA + "Crate series #[0-9]+");
     }
 
@@ -71,9 +63,8 @@ public class Crate
         meta.setDisplayName(ChatColor.YELLOW + "Steve Co. Supply Crate");
         List<String> lore = new ArrayList<String>();
         lore.add(ChatColor.AQUA + "Crate series #" + series);
-        lore.add(ChatColor.WHITE + "Craft this crate with a");
+        lore.add(ChatColor.BOLD + "" + ChatColor.LIGHT_PURPLE + "Craft " + ChatColor.WHITE + "this crate with a");
         lore.add(ChatColor.YELLOW + "Steve Co. Supply Crate Key");
-        lore.add(ChatColor.WHITE + "to open this.");
         lore.add(ChatColor.GRAY + "Hint: You can craft");
         lore.add(ChatColor.GRAY + "in your inventory");
         meta.setLore(lore);

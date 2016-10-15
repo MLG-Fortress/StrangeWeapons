@@ -42,7 +42,8 @@ public class DestructionListener implements Listener
         if (Crate.isCrate(event.getItemInHand()))
         {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED + "To open a Steve Co. Supply Crate, craft it with a " + ChatColor.YELLOW + "Steve Co. Supply Crate key!");
+            event.getPlayer().sendMessage(ChatColor.RED + "To open a Steve Co. Supply Crate, " + ChatColor.AQUA + "craft it " + ChatColor.RED + "with a " + ChatColor.YELLOW + "Steve Co. Supply Crate key!");
+            event.getPlayer().sendMessage(ChatColor.GRAY + "Hint: You can craft in your inventory.");
         }
         else
             if (event.getItemInHand().getType().isBlock() && StrangeWeapon.isStrangeWeapon(event.getItemInHand()))
