@@ -310,6 +310,7 @@ public class InventoryListener implements Listener
                     //Broadcast the uncrating
                     //TODO: hook into my sound API and play much fanfare
                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
+                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "irc say samplebot #MLG " + player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
 
                     // Maybe this fixes it?
                     // Dupe fix?
