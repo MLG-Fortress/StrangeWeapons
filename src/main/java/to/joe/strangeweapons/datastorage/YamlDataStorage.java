@@ -74,21 +74,23 @@ public class YamlDataStorage implements DataStorageInterface
             dropsConfig.createSection("players");
         }
 
-        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    weaponConfig.save(weaponConfigFile);
-                    dropsConfig.save(dropsConfigFile);
-                }
-                catch (IOException e)
-                {
-                    plugin.getServer().getLogger().log(Level.SEVERE, "Error writing file!", e);
-                }
-            }
-        }, 1200, 1200);
+        //Takes ~80ms to execute, so either have this running every hour, or not at all
+        //Considering how unimportant this is (for me at least), I'll elect to not have it run at all
+//        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
+//        {
+//            public void run()
+//            {
+//                try
+//                {
+//                    weaponConfig.save(weaponConfigFile);
+//                    dropsConfig.save(dropsConfigFile);
+//                }
+//                catch (IOException e)
+//                {
+//                    plugin.getServer().getLogger().log(Level.SEVERE, "Error writing file!", e);
+//                }
+//            }
+//        }, 1200, 1200);
     }
 
     public void shutdown()
