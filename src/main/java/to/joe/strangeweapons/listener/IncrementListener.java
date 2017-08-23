@@ -31,7 +31,7 @@ public class IncrementListener implements Listener
 
     private void increment(Player player, Part part)
     {
-        ItemStack item = player.getItemInHand();
+        ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getAmount() > 0 && StrangeWeapon.isStrangeWeapon(item))
         {
             StrangeWeapon strange = new StrangeWeapon(item);
@@ -51,7 +51,7 @@ public class IncrementListener implements Listener
                     plugin.getServer().broadcastMessage(player.getDisplayName() + "'s " + Util.toTitleCase(item.getType().toString().toLowerCase().replaceAll("_", " ")) + ChatColor.WHITE + " has reached a new rank: " + ChatColor.GOLD + Util.getWeaponName((int) (newPrimary.getValue() * newPrimary.getKey().getMultiplier())));
                 }
             }
-            player.setItemInHand(strange.getItemStack());
+            player.getInventory().setItemInMainHand(strange.getItemStack());
         }
     }
 
@@ -95,7 +95,7 @@ public class IncrementListener implements Listener
         if (event.getEntity().getKiller() != null)
         {
             Player player = event.getEntity().getKiller();
-            ItemStack item = player.getItemInHand();
+            ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getAmount() > 0 && StrangeWeapon.isStrangeWeapon(item))
             {
                 StrangeWeapon strange = new StrangeWeapon(item);
@@ -135,7 +135,7 @@ public class IncrementListener implements Listener
                         plugin.getServer().broadcastMessage(player.getDisplayName() + "'s " + Util.toTitleCase(item.getType().toString().toLowerCase().replaceAll("_", " ")) + ChatColor.WHITE + " has reached a new rank: " + Util.getWeaponName((int) (newPrimary.getValue() * newPrimary.getKey().getMultiplier())));
                     }
                 }
-                player.setItemInHand(strange.getItemStack());
+                player.getInventory().setItemInMainHand(strange.getItemStack());
             }
         }
     }
