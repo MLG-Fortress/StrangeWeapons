@@ -121,10 +121,10 @@ permissions:
     description: Does not announce publicly when this player gets a drop, in case they may be vanished
   strangeweapons.drop.dropcrates:
     description: Drop crates for this player
-    default: true
+    default: false
   strangeweapons.drop.dropitems:
     description: Drop items for this player
-    default: true
+    default: false
   strangeweapons.*:
     description: Gives all of the strange weapons permissions
     children:
