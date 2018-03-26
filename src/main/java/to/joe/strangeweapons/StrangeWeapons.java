@@ -311,7 +311,7 @@ class PlaytimeRecorder implements Runnable
                                 {
                                     // But if they don't have the perm
                                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has found: " + ChatColor.YELLOW + lootName);
-                                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "irc say samplebot #MLG " + player.getDisplayName() + ChatColor.WHITE + " has found: " + ChatColor.YELLOW + lootName);
+                                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "communicationconnector " + player.getDisplayName() + ChatColor.WHITE + " has found: " + ChatColor.YELLOW + lootName);
                                     // We broadcast to the entire server!
                                 }
                             }

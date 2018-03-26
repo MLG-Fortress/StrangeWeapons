@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import to.joe.strangeweapons.StrangeWeapons;
@@ -22,12 +23,16 @@ public class DestructionListener implements Listener
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    //@SuppressWarnings("deprecation")
+
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent event)
     {
         Player p = event.getPlayer();
-        ItemStack item = event.getPlayer().getItemInHand();
+        ItemStack item;
+        if (event.getHand() == EquipmentSlot.OFF_HAND)
+            item = event.getPlayer().getInventory().getItemInOffHand();
+        else
+            item = event.getPlayer().getInventory().getItemInMainHand();
         if (event.getRightClicked() instanceof PoweredMinecart && item.getType() == Material.COAL && StrangeWeapon.isStrangeWeapon(p.getItemInHand()))
         {
             event.setCancelled(true);
@@ -42,8 +47,8 @@ public class DestructionListener implements Listener
         if (Crate.isCrate(event.getItemInHand()))
         {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED + "To open a Steve Co. Supply Crate, " + ChatColor.AQUA + "craft it " + ChatColor.RED + "with a " + ChatColor.YELLOW + "Steve Co. Supply Crate key!");
-            event.getPlayer().sendMessage(ChatColor.GRAY + "Hint: You can craft in your inventory.");
+            event.getPlayer().sendMessage(ChatColor.RED + "Craft this crate with a " + ChatColor.YELLOW + "Steve Co. Supply Crate " + ChatColor.GOLD + "key!");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "TIP: u can craft in ur inventory!!11!");
         }
         else
             if (event.getItemInHand().getType().isBlock() && StrangeWeapon.isStrangeWeapon(event.getItemInHand()))

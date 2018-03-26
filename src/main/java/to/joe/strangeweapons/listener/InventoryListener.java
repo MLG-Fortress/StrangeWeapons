@@ -3,6 +3,7 @@ package to.joe.strangeweapons.listener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -231,7 +232,7 @@ public class InventoryListener implements Listener
                 }
             }.runTaskLater(plugin, 1L);
         }
-            /**
+            /*
              * if the RESULT slot was clicked...
              */
             else if (event.getSlotType() == SlotType.RESULT)
@@ -285,7 +286,7 @@ public class InventoryListener implements Listener
                     }
                     numTotalItems++;
                 }
-                /**
+                /*
                  * If there's one itemstack of crates and one itemstack of keys...
                  * He probably should've made a method for this instead which accepts a boolean (result or crafting) and such idk wutevar
                  */
@@ -308,14 +309,14 @@ public class InventoryListener implements Listener
                         lootName = ChatColor.YELLOW + Util.toTitleCase(loot.getType().toString().toLowerCase().replaceAll("_", " "));
                     }
                     //Broadcast the uncrating
-                    //TODO: hook into my sound API and play much fanfare
                     plugin.getServer().broadcastMessage(player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
-                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "irc say samplebot #MLG " + player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
+                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "communicationconnector " + player.getDisplayName() + ChatColor.WHITE + " has unboxed: " + ChatColor.YELLOW + lootName);
+                    player.playSound(player.getLocation(), "fortress.unbox", SoundCategory.AMBIENT, 3000000f, 1.0f);
 
                     // Maybe this fixes it?
                     // Dupe fix?
 
-                    /**
+                    /*
                      * So here he's trying to remove items from the crafting matrix.
                      * Weird things happen if there's more than one key in the matrix for whatever reason.
                      * Unless I'm blind and can't see the problem here, I think the server is messing up when the ItemClickEvent fires in
@@ -338,7 +339,7 @@ public class InventoryListener implements Listener
                                 }
                             } else {
                                 beforeCraft[i].setType(Material.AIR);
-                                player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 1");
+                                //player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 1");
                             }
                         } else if (Crate.isCrate(beforeCraft[i])) {
                             if (beforeCraft[i].getAmount() > 0) {
@@ -350,7 +351,7 @@ public class InventoryListener implements Listener
                                 }
                             } else {
                                 beforeCraft[i].setType(Material.AIR);
-                                player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 2");
+                                //player.kickPlayer("Uhm something wrong happened, please join IRC at techfort.us.to and explain what happened. Debug code 2");
                             }
                         }
                     }
