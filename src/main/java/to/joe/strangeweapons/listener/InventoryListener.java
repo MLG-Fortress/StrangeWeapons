@@ -153,11 +153,11 @@ public class InventoryListener implements Listener
                      */
                     if (numCrates == 1 && numKeys == 1 && numTotalItems == 2) {
                         //Prepare fake item
-                        ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
+                        ItemStack fakeItem = new ItemStack(Material.POTATO);
                         ItemMeta meta = fakeItem.getItemMeta();
                         meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
                         fakeItem.setItemMeta(meta);
-                        fakeItem.setType(Material.POTATO_ITEM);
+                        fakeItem.setType(Material.POTATO);
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);
@@ -257,7 +257,7 @@ public class InventoryListener implements Listener
                 //Iterate through each slot in the crafting matrix...
                 for (ItemStack i : matrix)
                 {
-                    if (i == null || i.getTypeId() == 0) //Skip slot if slot is empty
+                    if (i == null) //Skip slot if slot is empty
                     {
                         continue;
                     }
@@ -362,11 +362,11 @@ public class InventoryListener implements Listener
                     if (itemsStillRemain)
                     {
                         //Prepare fake item
-                        ItemStack fakeItem = new ItemStack(Material.POTATO_ITEM);
+                        ItemStack fakeItem = new ItemStack(Material.POTATO);
                         ItemMeta meta = fakeItem.getItemMeta();
                         meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Mystery Item!");
                         fakeItem.setItemMeta(meta);
-                        fakeItem.setType(Material.POTATO_ITEM);
+                        fakeItem.setType(Material.POTATO);
 
                         //set fake item in result slot, and update inventory to reflect this on next tick
                         craftingInventory.setResult(fakeItem);

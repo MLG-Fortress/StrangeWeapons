@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -113,18 +114,18 @@ public class SpawnStrangeCommand implements CommandExecutor
         if (combinedArgs.size() > position)
         {
             String[] split = combinedArgs.get(position).split(":");
-            try
+            Material material = Material.getMaterial(split[0]);
+
+            if (material == null)
             {
-                item = new ItemStack(Integer.parseInt(split[0]));
-                if (split.length > 1)
-                {
-                    item.setDurability(Short.parseShort(split[1]));
-                }
-            }
-            catch (NumberFormatException e)
-            {
-                sender.sendMessage(ChatColor.RED + "That's not a number");
+                sender.sendMessage(ChatColor.RED + "That's not a material");
                 return true;
+            }
+
+            item = new ItemStack(material);
+            if (split.length > 1)
+            {
+                item.setDurability(Short.parseShort(split[1]));
             }
         }
         else

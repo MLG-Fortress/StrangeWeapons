@@ -75,7 +75,7 @@ public class DurabilityListener implements Listener
             return;
         }
         Material mat = event.getItem().getType();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && (mat.equals(Material.WOOD_HOE) || mat.equals(Material.STONE_HOE) || mat.equals(Material.IRON_HOE) || mat.equals(Material.GOLD_HOE) || mat.equals(Material.DIAMOND_HOE)) && StrangeWeapon.isStrangeWeapon(event.getItem()))
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && (mat.equals(Material.WOODEN_HOE) || mat.equals(Material.STONE_HOE) || mat.equals(Material.IRON_HOE) || mat.equals(Material.GOLDEN_HOE) || mat.equals(Material.DIAMOND_HOE)) && StrangeWeapon.isStrangeWeapon(event.getItem()))
         {
             event.getItem().setDurability((short) 0);
             event.getPlayer().updateInventory();
