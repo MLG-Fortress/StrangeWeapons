@@ -188,12 +188,21 @@ public class StrangeWeapons extends JavaPlugin implements Listener
     @EventHandler
     public void onQuit(PlayerQuitEvent event)
     {
+        String name = event.getPlayer().getName();
+        Long joinTime = joinTimes.remove(name);
+        if (joinTime == null)
+        {
+            // No join record, so there is no session to add up. This happens
+            // when the plugin is enabled while a player is already online.
+            // Reading the map anyway used to throw a null pointer exception
+            // out of the quit handler and lose the play time.
+            return;
+        }
         try
         {
-            PlayerDropData data = dataStorage.getPlayerDropData(event.getPlayer().getName());
-            data.setPlayTime(data.getPlayTime() + (int) ((System.currentTimeMillis() - joinTimes.get(event.getPlayer().getName())) / 1000));
+            PlayerDropData data = dataStorage.getPlayerDropData(name);
+            data.setPlayTime(data.getPlayTime() + (int) ((System.currentTimeMillis() - joinTime) / 1000));
             dataStorage.updatePlayerDropData(data);
-            joinTimes.remove(event.getPlayer().getName());
         }
         catch (DataStorageException e)
         {
